@@ -28,3 +28,19 @@ Build a REST API for task and project management, focused on authentication, cle
 - Real-time chat
 - Payments
 - Complex notifications
+
+## Project Structure
+
+backend-api/
+├── cmd/
+│ └── api/
+├── internal/
+│ ├── auth/
+│ ├── database/
+│ ├── project/
+│ ├── server/
+│ ├── task/
+│ └── user/
+├── migrations/
+├── tests/
+└── docs/
