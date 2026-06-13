@@ -1,34 +1,18 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/dhrodrigues29/backend-api/internal/server"
 )
 
-type HealthResponse struct {
-	Status string `json:"status"`
-}
-
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	response := HealthResponse{
-		Status: "ok",
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-
-	json.NewEncoder(w).Encode(response)
-}
-
 func main() {
-	mux := http.NewServeMux()
+	srv := server.New()
 
-	mux.HandleFunc("GET /health", healthHandler)
+	log.Println("server running on :8080")
 
-	log.Println("Server running on :8080")
-
-	err := http.ListenAndServe(":8080", mux)
-	if err != nil {
+	if err := http.ListenAndServe(":8080", srv); err != nil {
 		log.Fatal(err)
 	}
 }
