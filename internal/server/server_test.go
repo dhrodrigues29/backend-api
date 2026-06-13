@@ -30,3 +30,29 @@ func TestHealthHandler(t *testing.T) {
 		t.Fatalf("expected Content-Type application/json, got %s", contentType)
 	}
 }
+
+func TestHealthEndpointRejectsUnsupportedMethod(t *testing.T) {
+	srv := New()
+
+	req := httptest.NewRequest(http.MethodPost, "/health", nil)
+	rec := httptest.NewRecorder()
+
+	srv.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusMethodNotAllowed {
+		t.Fatalf("expected status %d, got %d", http.StatusMethodNotAllowed, rec.Code)
+	}
+}
+
+func TestUnknownRouteReturnsNotFound(t *testing.T) {
+	srv := New()
+
+	req := httptest.NewRequest(http.MethodGet, "/unknown", nil)
+	rec := httptest.NewRecorder()
+
+	srv.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusNotFound {
+		t.Fatalf("expected status %d, got %d", http.StatusNotFound, rec.Code)
+	}
+}
