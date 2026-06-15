@@ -55,4 +55,10 @@ func TestUnknownRouteReturnsNotFound(t *testing.T) {
 	if rec.Code != http.StatusNotFound {
 		t.Fatalf("expected status %d, got %d", http.StatusNotFound, rec.Code)
 	}
+
+	expectedBody := `{"error":"resource not found"}`
+
+	if strings.TrimSpace(rec.Body.String()) != expectedBody {
+		t.Fatalf("expected body %s, got %s", expectedBody, rec.Body.String())
+	}
 }

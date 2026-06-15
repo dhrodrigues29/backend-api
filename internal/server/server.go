@@ -8,6 +8,7 @@ func New() http.Handler {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /health", healthHandler)
+	mux.HandleFunc("/", notFoundHandler)
 
 	return mux
 }
