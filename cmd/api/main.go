@@ -4,15 +4,20 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dhrodrigues29/backend-api/internal/config"
 	"github.com/dhrodrigues29/backend-api/internal/server"
 )
 
 func main() {
 	srv := server.New()
+	cfg := config.Load()
 
-	log.Println("server running on :8080")
+	log.Printf(
+		"server running on %s",
+		cfg.ServerAddress,
+	)
 
-	if err := http.ListenAndServe(":8080", srv); err != nil {
+	if err := http.ListenAndServe(cfg.ServerAddress, srv); err != nil {
 		log.Fatal(err)
 	}
 }
